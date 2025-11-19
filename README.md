@@ -1,7 +1,7 @@
 # BÀI THỰC HÀNH SỐ 04: Giao tiếp với Web Server trong C#
-## Người thực hiện: Nhóm thực hành số 5 lớp NT106.Q14.2
-### Phân công công việc
+## Thực hiện: Nhóm thực hành số 5 lớp NT106.Q14.2
 
+Phân công công việc:
 | MSSV | Họ và tên | Nhiệm vụ |
 | :---- | :--------- | :------------------------- |
 | 24520463 | Nguyễn Phương Phúc Hậu | Làm bài 1 (bai01), bài 2 (bai02) |
