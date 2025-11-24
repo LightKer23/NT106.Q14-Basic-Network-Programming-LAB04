@@ -5,11 +5,11 @@ using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
 namespace Bai03
 {
-    public partial class Web_Browser : Form
+    public partial class Form1 : Form
     {
         private static readonly HttpClient httpClient = new HttpClient();
 
-        public Web_Browser()
+        public Form1()
         {
             InitializeComponent();
             this.Load += Form1_Load;

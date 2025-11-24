@@ -1,6 +1,6 @@
 ﻿namespace Bai03
 {
-    partial class Web_Browser
+    partial class Form1
     {
         /// <summary>
         ///  Required designer variable.
