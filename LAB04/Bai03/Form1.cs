@@ -232,8 +232,6 @@ namespace Bai03
                             failed++;
                         }
                     }
-                    MessageBox.Show($"Hoàn thành!\nĐã tải: {downloaded} hình\nThất bại: {failed} hình\nThư mục: {savePath}",
-                        "Kết quả", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
