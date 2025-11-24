@@ -38,7 +38,7 @@ namespace Bai03
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
-                                height: 100vh;
+                                height: 90vh;
                                 margin: 0;
                                 background-color: #f0f0f0;
                             }}

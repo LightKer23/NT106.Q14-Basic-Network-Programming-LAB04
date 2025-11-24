@@ -39,9 +39,10 @@
             // 
             // btnLoad
             // 
+            btnLoad.Font = new Font("Tahoma", 10.2F);
             btnLoad.Location = new Point(796, 12);
             btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(145, 30);
+            btnLoad.Size = new Size(150, 30);
             btnLoad.TabIndex = 0;
             btnLoad.Text = "Load";
             btnLoad.UseVisualStyleBackColor = true;
@@ -60,9 +61,10 @@
             // 
             // btnReload
             // 
+            btnReload.Font = new Font("Tahoma", 10.2F);
             btnReload.Location = new Point(12, 12);
             btnReload.Name = "btnReload";
-            btnReload.Size = new Size(145, 30);
+            btnReload.Size = new Size(150, 30);
             btnReload.TabIndex = 1;
             btnReload.Text = "Reload";
             btnReload.UseVisualStyleBackColor = true;
@@ -70,16 +72,18 @@
             // 
             // txtUrl
             // 
-            txtUrl.Location = new Point(176, 12);
+            txtUrl.Font = new Font("Tahoma", 10.2F);
+            txtUrl.Location = new Point(176, 14);
             txtUrl.Name = "txtUrl";
-            txtUrl.Size = new Size(600, 27);
+            txtUrl.Size = new Size(600, 28);
             txtUrl.TabIndex = 2;
             // 
             // btnDowFi
             // 
-            btnDowFi.Location = new Point(631, 47);
+            btnDowFi.Font = new Font("Tahoma", 10.2F);
+            btnDowFi.Location = new Point(626, 47);
             btnDowFi.Name = "btnDowFi";
-            btnDowFi.Size = new Size(145, 30);
+            btnDowFi.Size = new Size(150, 30);
             btnDowFi.TabIndex = 3;
             btnDowFi.Text = "Down Files HTML";
             btnDowFi.UseVisualStyleBackColor = true;
@@ -87,15 +91,16 @@
             // 
             // btnDowRe
             // 
+            btnDowRe.Font = new Font("Tahoma", 10.2F);
             btnDowRe.Location = new Point(796, 47);
             btnDowRe.Name = "btnDowRe";
-            btnDowRe.Size = new Size(145, 30);
+            btnDowRe.Size = new Size(150, 30);
             btnDowRe.TabIndex = 4;
             btnDowRe.Text = "Down Resources";
             btnDowRe.UseVisualStyleBackColor = true;
             btnDowRe.Click += btnDowRe_Click;
             // 
-            // Web_Browser
+            // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -106,7 +111,7 @@
             Controls.Add(btnReload);
             Controls.Add(btnLoad);
             Controls.Add(webView21);
-            Name = "Web_Browser";
+            Name = "Form1";
             Text = "Web_Browser";
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
