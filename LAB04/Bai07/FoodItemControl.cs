@@ -45,11 +45,11 @@ namespace Bai07
 
         public void SetData(FoodItem food)
         {
-            FoodName = food.name;
-            Price = $"Giá: {food.price}";
-            Address = $"Địa chỉ: {food.address}";
-            Contributor = $"Đóng góp: {food.owner_name}";
-            SetImageFromUrl(food.image);
+            FoodName = food.ten_mon_an;
+            Price = $"Giá: {food.gia}";
+            Address = $"Địa chỉ: {food.dia_chi}";
+            Contributor = $"Đóng góp: {food.nguoi_dong_gop}";
+            SetImageFromUrl(food.hinh_anh);
         }
 
         public void SetImageFromUrl(string url)

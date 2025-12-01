@@ -8,11 +8,12 @@ namespace Bai07.Models
 {
     public class FoodItem
     {
-        public string name { get; set; }
-        public int price { get; set; }
-        public string description { get; set; }
-        public string image { get; set; }
-        public string address { get; set; }
-        public string owner_name { get; set; }
+        public int id { get; set; }
+        public string ten_mon_an { get; set; } = string.Empty;
+        public int gia { get; set; }
+        public string? mo_ta { get; set; }
+        public string? hinh_anh { get; set; }
+        public string? dia_chi { get; set; }
+        public string? nguoi_dong_gop { get; set; }
     }
 }

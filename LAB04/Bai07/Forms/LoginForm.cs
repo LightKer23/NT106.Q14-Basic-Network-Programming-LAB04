@@ -1,3 +1,6 @@
+using Bai07.Models;
+using Bai07.Utils;
+
 namespace Bai07
 {
     public partial class LoginForm : Form
@@ -28,9 +31,41 @@ namespace Bai07
             this.Close();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
+            string username = txtUsername.Text.Trim();
+            string password = txtPsswrd.Text.Trim();
 
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Vui lòng nhập tên người dùng và mật khẩu!",
+                    "Đăng nhập thất bại",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            var login = await Program.AuthService.LoginAsync(username, password);
+
+            if (!login.Success)
+            {
+                MessageBox.Show("Sai tên người dùng hoặc mật khẩu!",
+                    "Đăng nhập thất bại",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            var me = await Program.AuthService.GetMeAsync();
+
+            if (me.Success && me.Data != null)
+            {
+                CurrentUser.SetUser(me.Data);
+            }
+
+            var main = new MainForm();
+            main.Show();
+            this.Hide();
         }
     }
 }

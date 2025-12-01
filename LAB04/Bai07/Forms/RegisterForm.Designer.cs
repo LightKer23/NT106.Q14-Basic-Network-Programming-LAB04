@@ -155,6 +155,7 @@
             btnRegister.TabIndex = 22;
             btnRegister.Text = "Ok";
             btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.Click += btnRegister_Click;
             // 
             // btnLogin
             // 
@@ -165,7 +166,7 @@
             btnLogin.TabIndex = 24;
             btnLogin.Text = "Đăng nhập...";
             btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Click += btnRegister_Click;
+            btnLogin.Click += btnLogin_Click;
             // 
             // comboBox1
             // 

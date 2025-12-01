@@ -52,10 +52,10 @@ namespace Bai07
                 return;
             }
 
-            _totalPages = result.Data.total_pages;
+            _totalPages = result.Data.TotalPages;
             UpdatePageCombo();
 
-            RenderAllFoods(result.Data.items);
+            RenderAllFoods(result.Data.Items);
         }
 
         private async Task LoadMyFoodsAsync()
@@ -72,10 +72,10 @@ namespace Bai07
                 return;
             }
 
-            _totalPages = result.Data.total_pages;
+            _totalPages = result.Data.TotalPages;
             UpdatePageCombo();
 
-            RenderMyFoods(result.Data.items);
+            RenderMyFoods(result.Data.Items);
         }
 
         private void RenderAllFoods(List<FoodItem> items)
@@ -151,16 +151,19 @@ namespace Bai07
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var frm = new AddDishForm();
-            if (frm.ShowDialog() == DialogResult.OK)
+            using (var frm = new AddDishForm())
             {
-                ReloadCurrentTabAsync();
+                if (frm.ShowDialog(this) == DialogResult.OK)
+                {
+                    _page = 1;
+                    ReloadCurrentTabAsync(); 
+                }
             }
         }
 
         private void tsslLogOut_Click(object sender, EventArgs e)
         {
-            CurrentUser.Clear();
+            CurrentUser.ClearUser();
             this.Hide();
             new LoginForm().Show();
             this.Close();

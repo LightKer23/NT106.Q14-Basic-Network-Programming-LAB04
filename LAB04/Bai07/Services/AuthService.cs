@@ -19,16 +19,25 @@ namespace Bai07.Services
             var form = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("username", username),
-                new KeyValuePair<string, string>("password", password)
+                new KeyValuePair<string, string>("password", password),
+                new KeyValuePair<string, string>("grant_type", "password")
             });
 
-            var response = await _apiClient.PostFromAsync<AuthTokenResponse>("auth/login", form);
+            var response = await _apiClient.PostFromAsync<AuthTokenResponse>("/auth/token", form);
 
             if (response.Success && response.Data != null)
+            {
                 _apiClient.SetToken(response.Data.token_type, response.Data.access_token);
+            }
 
             return response;
         }
+
+        public Task<ApiResult<UserInfo>> GetMeAsync()
+        {
+            return _apiClient.GetAsync<UserInfo>("/auth/me");
+        }
+
         public async Task<ApiResult<UserInfo>> RegisterAsync(UserInfo userInfo)
         {
             var payload = new
@@ -40,7 +49,7 @@ namespace Bai07.Services
                 last_name = userInfo.last_name,
             };
 
-            return await _apiClient.PostJsonAsync<object, UserInfo>("auth/register", payload);
+            return await _apiClient.PostJsonAsync<object, UserInfo>("/api/v1/user/signup", payload);
         }
     }
 }

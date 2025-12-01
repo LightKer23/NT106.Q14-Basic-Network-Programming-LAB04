@@ -27,7 +27,7 @@ namespace Bai07.Forms
 
         private void RandomFoodForm_Load(object sender, EventArgs e)
         {
-            this.Text = $"Ăn {_food.name} đi!!!";
+            this.Text = $"Ăn {_food.ten_mon_an} đi!!!";
             foodItemControl1.SetData(_food);
         }
     }

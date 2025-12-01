@@ -139,6 +139,7 @@
             txtPsswrd.Name = "txtPsswrd";
             txtPsswrd.Size = new Size(257, 27);
             txtPsswrd.TabIndex = 6;
+            txtPsswrd.UseSystemPasswordChar = true;
             // 
             // btnCancel
             // 

@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
-            lblNameFood = new Label();
-            lblImg = new Label();
-            lblAddress = new Label();
-            lblPrice = new Label();
-            lblDescription = new Label();
-            txtNameDish = new TextBox();
-            txtPrice = new TextBox();
-            txtAddress = new TextBox();
-            btnPickImg = new Button();
+            ckbDish = new CheckBox();
             txtDescription = new TextBox();
-            checkBox1 = new CheckBox();
+            btnPickImg = new Button();
+            txtAddress = new TextBox();
+            txtPrice = new TextBox();
+            txtNameDish = new TextBox();
+            lblDescription = new Label();
+            lblPrice = new Label();
+            lblAddress = new Label();
+            lblImg = new Label();
+            lblNameFood = new Label();
             btnAdd = new Button();
             btnCancel = new Button();
             groupBox1.SuspendLayout();
@@ -47,7 +47,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(checkBox1);
+            groupBox1.Controls.Add(ckbDish);
             groupBox1.Controls.Add(txtDescription);
             groupBox1.Controls.Add(btnPickImg);
             groupBox1.Controls.Add(txtAddress);
@@ -66,76 +66,24 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Nhập";
             // 
-            // lblNameFood
+            // ckbDish
             // 
-            lblNameFood.AutoSize = true;
-            lblNameFood.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNameFood.Location = new Point(22, 25);
-            lblNameFood.Name = "lblNameFood";
-            lblNameFood.Size = new Size(94, 18);
-            lblNameFood.TabIndex = 0;
-            lblNameFood.Text = "Tên món ăn:";
+            ckbDish.AutoSize = true;
+            ckbDish.Enabled = false;
+            ckbDish.Location = new Point(391, 134);
+            ckbDish.Name = "ckbDish";
+            ckbDish.Size = new Size(84, 22);
+            ckbDish.TabIndex = 10;
+            ckbDish.Text = "Đã chọn";
+            ckbDish.UseVisualStyleBackColor = true;
             // 
-            // lblImg
+            // txtDescription
             // 
-            lblImg.AutoSize = true;
-            lblImg.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblImg.Location = new Point(22, 130);
-            lblImg.Name = "lblImg";
-            lblImg.Size = new Size(70, 18);
-            lblImg.TabIndex = 1;
-            lblImg.Text = "Hình ảnh:";
-            // 
-            // lblAddress
-            // 
-            lblAddress.AutoSize = true;
-            lblAddress.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblAddress.Location = new Point(22, 95);
-            lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(55, 18);
-            lblAddress.TabIndex = 2;
-            lblAddress.Text = "Địa chỉ:";
-            // 
-            // lblPrice
-            // 
-            lblPrice.AutoSize = true;
-            lblPrice.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPrice.Location = new Point(22, 60);
-            lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(33, 18);
-            lblPrice.TabIndex = 3;
-            lblPrice.Text = "Giá:";
-            // 
-            // lblDescription
-            // 
-            lblDescription.AutoSize = true;
-            lblDescription.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDescription.Location = new Point(22, 165);
-            lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(51, 18);
-            lblDescription.TabIndex = 4;
-            lblDescription.Text = "Mô tả:";
-            // 
-            // txtNameDish
-            // 
-            txtNameDish.Location = new Point(122, 22);
-            txtNameDish.Name = "txtNameDish";
-            txtNameDish.Size = new Size(250, 26);
-            txtNameDish.TabIndex = 5;
-            // 
-            // txtPrice
-            // 
-            txtPrice.Location = new Point(122, 60);
-            txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(250, 26);
-            txtPrice.TabIndex = 6;
-            // 
-            // txtAddress
-            // 
-            txtAddress.Location = new Point(122, 95);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(250, 26);
-            txtAddress.TabIndex = 7;
+            txtDescription.Location = new Point(122, 165);
+            txtDescription.Multiline = true;
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(250, 161);
+            txtDescription.TabIndex = 9;
             // 
             // btnPickImg
             // 
@@ -148,25 +96,78 @@
             btnPickImg.TabIndex = 8;
             btnPickImg.Text = "Chọn ảnh";
             btnPickImg.UseVisualStyleBackColor = false;
+            btnPickImg.Click += btnPickImg_Click;
             // 
-            // txtDescription
+            // txtAddress
             // 
-            txtDescription.Location = new Point(122, 165);
-            txtDescription.Multiline = true;
-            txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(250, 161);
-            txtDescription.TabIndex = 9;
+            txtAddress.Location = new Point(122, 95);
+            txtAddress.Name = "txtAddress";
+            txtAddress.Size = new Size(250, 26);
+            txtAddress.TabIndex = 7;
             // 
-            // checkBox1
+            // txtPrice
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Enabled = false;
-            checkBox1.Location = new Point(391, 134);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(84, 22);
-            checkBox1.TabIndex = 10;
-            checkBox1.Text = "Đã chọn";
-            checkBox1.UseVisualStyleBackColor = true;
+            txtPrice.Location = new Point(122, 60);
+            txtPrice.Name = "txtPrice";
+            txtPrice.Size = new Size(250, 26);
+            txtPrice.TabIndex = 6;
+            // 
+            // txtNameDish
+            // 
+            txtNameDish.Location = new Point(122, 22);
+            txtNameDish.Name = "txtNameDish";
+            txtNameDish.Size = new Size(250, 26);
+            txtNameDish.TabIndex = 5;
+            // 
+            // lblDescription
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDescription.Location = new Point(22, 165);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(51, 18);
+            lblDescription.TabIndex = 4;
+            lblDescription.Text = "Mô tả:";
+            // 
+            // lblPrice
+            // 
+            lblPrice.AutoSize = true;
+            lblPrice.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblPrice.Location = new Point(22, 60);
+            lblPrice.Name = "lblPrice";
+            lblPrice.Size = new Size(33, 18);
+            lblPrice.TabIndex = 3;
+            lblPrice.Text = "Giá:";
+            // 
+            // lblAddress
+            // 
+            lblAddress.AutoSize = true;
+            lblAddress.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblAddress.Location = new Point(22, 95);
+            lblAddress.Name = "lblAddress";
+            lblAddress.Size = new Size(55, 18);
+            lblAddress.TabIndex = 2;
+            lblAddress.Text = "Địa chỉ:";
+            // 
+            // lblImg
+            // 
+            lblImg.AutoSize = true;
+            lblImg.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblImg.Location = new Point(22, 130);
+            lblImg.Name = "lblImg";
+            lblImg.Size = new Size(70, 18);
+            lblImg.TabIndex = 1;
+            lblImg.Text = "Hình ảnh:";
+            // 
+            // lblNameFood
+            // 
+            lblNameFood.AutoSize = true;
+            lblNameFood.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNameFood.Location = new Point(22, 25);
+            lblNameFood.Name = "lblNameFood";
+            lblNameFood.Size = new Size(94, 18);
+            lblNameFood.TabIndex = 0;
+            lblNameFood.Text = "Tên món ăn:";
             // 
             // btnAdd
             // 
@@ -176,6 +177,7 @@
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnCancel
             // 
@@ -185,6 +187,7 @@
             btnCancel.TabIndex = 2;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // AddDishForm
             // 
@@ -216,7 +219,7 @@
         private Label lblAddress;
         private Label lblImg;
         private TextBox txtDescription;
-        private CheckBox checkBox1;
+        private CheckBox ckbDish;
         private Button btnAdd;
         private Button btnCancel;
     }

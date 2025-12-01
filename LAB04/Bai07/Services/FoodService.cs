@@ -17,32 +17,86 @@ namespace Bai07.Services
 
         public Task<ApiResult<PagedResult<FoodItem>>> GetAllFoodsAsync(int page, int size)
         {
-            string url = $"/api/v1/monan/all?page={page}&size={size}";
-            return _apiClient.GetAsync<PagedResult<FoodItem>>(url);
+            var payload = new { 
+                page, 
+                size 
+            };
+            return _apiClient.PostJsonAsync<object, PagedResult<FoodItem>>("/api/v1/monan/all", payload);
         }
 
         public Task<ApiResult<PagedResult<FoodItem>>> GetMyFoodsAsync(int page, int size) 
         {
-            string url = $"/api/v1/monan/my-dishes?page={page}&size={size}";
-            return _apiClient.GetAsync<PagedResult<FoodItem>>(url);
+            var payload = new
+            {
+                _page = page,
+                _size = size
+            };
+
+            return _apiClient.PostJsonAsync<object, PagedResult<FoodItem>>("/api/v1/monan/my-dishes", payload);
         }
 
-        public Task<ApiResult<FoodItem>> AddFoodAsync(string name, string? imageURL)
+        public Task<ApiResult<FoodItem>> GetFoodByIdAsync(int id)
+        {
+            return _apiClient.GetAsync<FoodItem>($"/api/v1/monan/{id}");
+        }
+
+
+        public Task<ApiResult<FoodItem>> AddFoodAsync(string name, int price, string? description, string? imageUrl, string? address)
         {
             var payload = new
             {
-                name = name,
-                image_url = imageURL
+                ten_mon_an = name,
+                gia = price,
+                mo_ta = description,
+                hinh_anh = imageUrl,
+                dia_chi = address
             };
 
-            return _apiClient.PostJsonAsync<object, FoodItem>("/api/v1/monan", payload);
+            return _apiClient.PostJsonAsync<object, FoodItem>("/api/v1/monan/add", payload);
+        }
+
+        public Task<ApiResult<FoodItem>> UpdateFoodAsync(int id, string name, int price, string? description, string? image, string? address)
+        {
+            var payload = new
+            {
+                ten_mon_an = name,
+                gia = price,
+                mo_ta = description,
+                hinh_anh = image,
+                dia_chi = address
+            };
+
+            return _apiClient.PostJsonAsync<object, FoodItem>($"/api/v1/monan/{id}", payload);
         }
 
         public Task<ApiResult<bool>> DeleteFoodAsync(int id)
         {
-            string url = $"/api/v1/monan/{id}";
-            return _apiClient.DeleteAsync(url);
+            return _apiClient.DeleteAsync($"/api/v1/monan/{id}");
         }
+
+        public async Task<ApiResult<List<FoodItem>>> GetAllFoodsNoPagingAsync()
+        {
+            var allFoods = new List<FoodItem>();
+
+            var firstPage = await GetAllFoodsAsync(1, 50);
+            if (!firstPage.Success || firstPage.Data == null)
+                return ApiResult<List<FoodItem>>.Fail(firstPage.ErrorMessage ?? "Không tải được dữ liệu.");
+
+            allFoods.AddRange(firstPage.Data.Items);
+            int totalPages = firstPage.Data.TotalPages;
+
+            for (int p = 2; p <= totalPages; p++)
+            {
+                var pageResult = await GetAllFoodsAsync(p, 50);
+                if (!pageResult.Success || pageResult.Data == null)
+                    return ApiResult<List<FoodItem>>.Fail(pageResult.ErrorMessage ?? $"Không tải được trang {p}");
+
+                allFoods.AddRange(pageResult.Data.Items);
+            }
+
+            return ApiResult<List<FoodItem>>.Ok(allFoods);
+        }
+
 
     }
 }
