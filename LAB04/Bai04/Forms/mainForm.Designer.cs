@@ -45,6 +45,7 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.Location = new Point(0, 48);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(799, 363);
@@ -57,7 +58,7 @@
             progressBar1.Size = new Size(799, 28);
             progressBar1.TabIndex = 0;
             // 
-            // loadMovieForm
+            // mainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -65,7 +66,7 @@
             Controls.Add(progressBar1);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label1);
-            Name = "loadMovieForm";
+            Name = "mainForm";
             Text = "Load Movie";
             Load += mainForm_Load;
             ResumeLayout(false);

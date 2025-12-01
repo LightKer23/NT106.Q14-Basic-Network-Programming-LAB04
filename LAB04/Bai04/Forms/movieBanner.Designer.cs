@@ -38,7 +38,7 @@
             // 
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(98, 100);
+            pictureBox1.Size = new Size(100, 129);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -70,7 +70,7 @@
             Controls.Add(movieName);
             Controls.Add(pictureBox1);
             Name = "movieBanner";
-            Size = new Size(700, 100);
+            Size = new Size(700, 129);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

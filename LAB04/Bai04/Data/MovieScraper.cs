@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Bai04.Data;
 using HtmlAgilityPack;
 using System.Net.Http;
+using System.Reflection;
 
 namespace Bai04.Data
 {
@@ -23,27 +24,45 @@ namespace Bai04.Data
             var doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(html);
 
-            var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/chi-tiet-phim')]");
-            if (nodes == null) return list;
+            var infoBlocks = doc.DocumentNode
+                .SelectNodes("//div[contains(@class,'film-info') and contains(@class,'film-xs-info')]");
+
+            if (infoBlocks == null) return list;
 
             int i = 0;
-            foreach (var n in nodes)
+            int total = infoBlocks.Count;
+
+            foreach (var info in infoBlocks)
             {
                 i++;
-                progress?.Report(i * 100 / nodes.Count);
+                progress?.Report(i * 100 / total);
 
-                string title = n.InnerText.Trim();
-                string link = "https://betacinemas.vn" + n.GetAttributeValue("href", "");
+                var linkNode = info.SelectSingleNode(".//h3//a[contains(@href,'chi-tiet-phim')]");
+                string title = HtmlEntity.DeEntitize(linkNode?.InnerText ?? "").Trim();
+
+                string href = linkNode?.GetAttributeValue("href", "") ?? "";
+                if (!string.IsNullOrEmpty(href) && href.StartsWith("/"))
+                    href = "https://betacinemas.vn" + href;
+                else if (string.IsNullOrEmpty(href))
+                    href = "https://betacinemas.vn";
+
+                if (string.IsNullOrWhiteSpace(title))
+                    title = "Unknown";
+
+                var row = info.ParentNode?.ParentNode;
+                var imgNode = row?.SelectSingleNode(".//div[contains(@class,'pi-img-wrapper')]//img");
+                string poster = imgNode?.GetAttributeValue("src", "") ?? "";
 
                 list.Add(new Movie
                 {
                     Title = title,
-                    DetailUrl = link,
-                    PosterUrl = "" 
+                    DetailUrl = href,
+                    PosterUrl = poster
                 });
             }
 
             return list;
         }
+
     }
 }

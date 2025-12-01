@@ -23,12 +23,26 @@ namespace Bai04.Forms
 
             movieName.Text = mv.Title;
             url.Text = mv.DetailUrl;
+            LoadPoster();
 
             this.Click += ClickBanner;
             pictureBox1.Click += ClickBanner;
             movieName.Click += ClickBanner;
             url.Click += ClickBanner;
         }
+
+        private async void LoadPoster()
+        {
+            try
+            {
+                var client = new HttpClient();
+                var bytes = await client.GetByteArrayAsync(Data.PosterUrl);
+                using var ms = new MemoryStream(bytes);
+                pictureBox1.Image = Image.FromStream(ms);
+            }
+            catch { }   
+        }
+
 
         private void ClickBanner(object? sender, EventArgs e)
         {
