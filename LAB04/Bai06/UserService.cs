@@ -19,22 +19,49 @@ namespace Bai06
 
         public async Task<(bool success, string message, UserResponse user)> GetUserInfoAsync(string token)
         {
-            using (var client = new HttpClient())
+            try
             {
-                // Gửi token vào Authorization
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", token);
+                using (var client = new HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(10);
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", token);
 
-                var response = await client.GetAsync(_url);
-                var json = await response.Content.ReadAsStringAsync();
+                    HttpResponseMessage response;
 
-                if (!response.IsSuccessStatusCode)
-                    return (false, json, null);
+                    try
+                    {
+                        response = await client.GetAsync(_url);
+                    }
+                    catch
+                    {
+                        return (false, "Không thể kết nối API", null);
+                    }
 
-                var user = JsonConvert.DeserializeObject<UserResponse>(json);
+                    string json = await response.Content.ReadAsStringAsync();
 
-                return (true, "OK", user);
+                    if (!response.IsSuccessStatusCode)
+                        return (false, "API trả về lỗi", null);
+
+                    try
+                    {
+                        var user = JsonConvert.DeserializeObject<UserResponse>(json);
+                        if (user == null)
+                            return (false, "Dữ liệu trả về không hợp lệ", null);
+
+                        return (true, "OK", user);
+                    }
+                    catch
+                    {
+                        return (false, "Lỗi khi đọc dữ liệu", null);
+                    }
+                }
+            }
+            catch
+            {
+                return (false, "Lỗi không xác định", null);
             }
         }
+
     }
 }

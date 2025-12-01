@@ -11,38 +11,44 @@
         {
             rtbShow.Clear();
 
-            string url = txtURL.Text.Trim();
-            string token = txtToken.Text.Trim();
-
-            if (url == "" || token == "")
+            try
             {
-                rtbShow.Text = "Vui lòng nhập đầy đủ dữ liệu!";
-                return;
-            }
+                string url = txtURL.Text.Trim();
+                string token = txtToken.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(url) || !Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                if (url == "" || token == "")
+                {
+                    MessageBox.Show("Vui lòng nhập đủ URL và Token");
+                    return;
+                }
+
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                {
+                    MessageBox.Show("URL không hợp lệ");
+                    return;
+                }
+
+                var service = new UserService(url);
+                var result = await service.GetUserInfoAsync(token);
+
+                if (!result.success)
+                {
+                    rtbShow.Text = result.message;
+                    return;
+                }
+
+                var user = result.user;
+
+                rtbShow.AppendText($"ID: {user.id}\n");
+                rtbShow.AppendText($"Username: {user.username}\n");
+                rtbShow.AppendText($"Full Name: {user.full_name}\n");
+                rtbShow.AppendText($"Email: {user.email}\n");
+                rtbShow.AppendText($"Disabled: {user.disabled}\n");
+            }
+            catch
             {
-                MessageBox.Show("Đường dẫn không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                rtbShow.Text = "Có lỗi xảy ra!";
             }
-
-            var service = new UserService(url);
-            var result = await service.GetUserInfoAsync(token);
-
-            if (!result.success)
-            {
-                rtbShow.Text = "Lỗi khi gọi API:\n" + result.message;
-                return;
-            }
-
-            var user = result.user;
-
-            rtbShow.AppendText("=== THÔNG TIN USER ===\n");
-            rtbShow.AppendText($"ID: {user.id}\n");
-            rtbShow.AppendText($"Username: {user.username}\n");
-            rtbShow.AppendText($"Full Name: {user.full_name}\n");
-            rtbShow.AppendText($"Email: {user.email}\n");
-            rtbShow.AppendText($"Disabled: {user.disabled}\n");
         }
     }
 }
