@@ -58,8 +58,7 @@ namespace Bai07
 
             if (string.IsNullOrEmpty(username))
             {
-                MessageBox.Show("Vui lòng nhập tên người dùng.", "Thiếu thông tin",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên người dùng.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtUsername.Focus();
                 return;
             }
@@ -96,17 +95,19 @@ namespace Bai07
                 return;
             }
 
-            if (string.IsNullOrEmpty(password) || password.Length < 4)
+            if (string.IsNullOrEmpty(password) || password.Length < 8)
             {
-                MessageBox.Show("Mật khẩu phải có ít nhất 4 ký tự.",
+                MessageBox.Show("Mật khẩu phải có ít nhất 8 ký tự.",
                     "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPsswrd.Focus();
                 return;
             }
 
             int sex;
-            if (rdBtnMale.Checked) sex = 0;
-            else if (rdBtnFemale.Checked) sex = 1;
+            if (rdBtnMale.Checked)
+                sex = 1;
+            else if (rdBtnFemale.Checked)
+                sex = 2;
             else
             {
                 MessageBox.Show("Vui lòng chọn giới tính.", "Thiếu thông tin",
@@ -128,10 +129,10 @@ namespace Bai07
                     password = password,
                     first_name = firstName,
                     last_name = lastName,
-                    sex = sex,
                     birthday = birthday,
                     language = language,
-                    phone = phone
+                    phone = phone,
+                    sex = sex
                 };
 
                 var result = await Program.AuthService.RegisterAsync(user);
@@ -147,7 +148,6 @@ namespace Bai07
                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
-
                 this.Close();
             }
             catch (Exception ex)

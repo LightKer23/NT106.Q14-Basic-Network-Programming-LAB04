@@ -107,10 +107,20 @@ namespace Bai07
         private void UpdatePageCombo()
         {
             cboPage.Items.Clear();
+
+            if (_totalPages <= 0)
+            {
+                cboPage.Enabled = false;      
+                cboPage.Text = "0";          
+                return;
+            }
+
+            cboPage.Enabled = true;
+
             for (int i = 1; i <= _totalPages; i++)
                 cboPage.Items.Add(i);
 
-            if (_page <= _totalPages)
+            if (_page >= 1 && _page <= _totalPages)
                 cboPage.SelectedItem = _page;
             else
                 cboPage.SelectedIndex = 0;
@@ -149,14 +159,14 @@ namespace Bai07
                 await LoadMyFoodsAsync();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
             using (var frm = new AddDishForm())
             {
                 if (frm.ShowDialog(this) == DialogResult.OK)
                 {
                     _page = 1;
-                    ReloadCurrentTabAsync(); 
+                    await ReloadCurrentTabAsync(); 
                 }
             }
         }

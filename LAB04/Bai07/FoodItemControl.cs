@@ -46,7 +46,7 @@ namespace Bai07
         public void SetData(FoodItem food)
         {
             FoodName = food.ten_mon_an;
-            Price = $"Giá: {food.gia}";
+            Price = $"Giá: {food.gia:0}";
             Address = $"Địa chỉ: {food.dia_chi}";
             Contributor = $"Đóng góp: {food.nguoi_dong_gop}";
             SetImageFromUrl(food.hinh_anh);

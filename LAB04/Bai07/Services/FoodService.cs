@@ -26,11 +26,7 @@ namespace Bai07.Services
 
         public Task<ApiResult<PagedResult<FoodItem>>> GetMyFoodsAsync(int page, int size) 
         {
-            var payload = new
-            {
-                _page = page,
-                _size = size
-            };
+            var payload = new { page, size };
 
             return _apiClient.PostJsonAsync<object, PagedResult<FoodItem>>("/api/v1/monan/my-dishes", payload);
         }

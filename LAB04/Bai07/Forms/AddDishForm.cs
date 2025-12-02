@@ -74,13 +74,7 @@ namespace Bai07
 
             try
             {
-                var result = await Program.FoodService.AddFoodAsync(
-                    name,
-                    price,
-                    description,
-                    _imagePathOrUrl,
-                    address
-                );
+                var result = await Program.FoodService.AddFoodAsync(name, price, description, _imagePathOrUrl, address);
 
                 if (!result.Success || result.Data == null)
                 {

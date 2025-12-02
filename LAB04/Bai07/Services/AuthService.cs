@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Bai07.Models;
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bai07.Models;
 
 namespace Bai07.Services
 {
@@ -47,6 +48,10 @@ namespace Bai07.Services
                 password = userInfo.password,
                 first_name = userInfo.first_name,
                 last_name = userInfo.last_name,
+                sex = userInfo.sex,
+                birthday = userInfo.birthday?.ToString("yyyy-MM-dd"),
+                language = userInfo.language,
+                phone = userInfo.phone
             };
 
             return await _apiClient.PostJsonAsync<object, UserInfo>("/api/v1/user/signup", payload);

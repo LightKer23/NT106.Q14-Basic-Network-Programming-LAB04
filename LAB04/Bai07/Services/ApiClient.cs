@@ -1,13 +1,9 @@
-﻿using System;
-using System.Text.Json;
-using System.Net.Http;
+﻿using Bai07.Models;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Bai07.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace Bai07.Services
 {
@@ -87,8 +83,16 @@ namespace Bai07.Services
                 if (!resp.IsSuccessStatusCode)
                     return ApiResult<TRes>.Fail(body);
 
-                var data = JsonSerializer.Deserialize<TRes>(body, _jsonOptions);
-                return ApiResult<TRes>.Ok(data!);
+                try
+                {
+                    var data = JsonSerializer.Deserialize<TRes>(body, _jsonOptions);
+                    return ApiResult<TRes>.Ok(data!);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(body, "JSON trả về khi thêm món");
+                    return ApiResult<TRes>.Fail("Lỗi parse JSON: " + ex.Message);
+                }
             }
             catch (Exception ex)
             {
@@ -124,7 +128,6 @@ namespace Bai07.Services
             }
             catch
             {
-                // Ignore parsing errors
             }
             return "Unknown error";
         }
