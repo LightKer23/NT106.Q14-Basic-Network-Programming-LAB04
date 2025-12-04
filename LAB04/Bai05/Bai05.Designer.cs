@@ -68,7 +68,7 @@
             groupBox1.Size = new Size(458, 116);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            groupBox1.Text = "Thông tin";
             // 
             // label3
             // 
