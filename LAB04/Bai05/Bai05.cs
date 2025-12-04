@@ -21,28 +21,41 @@ namespace Bai05
         {
             rtbShow.Clear();
 
-            string url = txtURL.Text.Trim();
-            string username = txtUser.Text.Trim();
-            string password = txtPass.Text.Trim();
-
-            if (url == "" || username == "" || password == "")
+            try
             {
-                rtbShow.AppendText("Vui lòng nhập đầy đủ dữ liệu!");
-                return;
+                string url = txtURL.Text.Trim();
+                string username = txtUser.Text.Trim();
+                string password = txtPass.Text.Trim();
+
+                if (url == "" || username == "" || password == "")
+                {
+                    rtbShow.AppendText("Vui lòng nhập đầy đủ dữ liệu!");
+                    return;
+                }
+
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                {
+                    MessageBox.Show("URL không hợp lệ", "Lỗi");
+                    return;
+                }
+
+                var service = new AuthService(url);
+                var result = await service.LoginAsync(username, password);
+
+                if (result.success)
+                {
+                    rtbShow.AppendText("Đăng nhập thành công!\n\n");
+                    rtbShow.AppendText(result.message);
+                }
+                else
+                {
+                    rtbShow.AppendText("Đăng nhập thất bại!\n");
+                    rtbShow.AppendText(result.message);
+                }
             }
-
-            var service = new AuthService(url);
-            var result = await service.LoginAsync(username, password);
-
-            if (result.success)
+            catch
             {
-                rtbShow.AppendText(result.message);
-                rtbShow.AppendText("\nĐăng nhập thành công!");
-            }
-            else
-            {
-                rtbShow.AppendText("Đăng nhập thất bại!\n");
-                rtbShow.AppendText("Lỗi: " + result.message);
+                rtbShow.AppendText("Có lỗi xảy ra!");
             }
         }
     }

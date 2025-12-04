@@ -20,31 +20,66 @@ namespace Bai05
 
         public async Task<(bool success, string message)> LoginAsync(string username, string password)
         {
-            using (var client = new HttpClient())
+            try
             {
-                var content = new MultipartFormDataContent
+                using (var client = new HttpClient())
                 {
-                    { new StringContent(username), "username" },
-                    { new StringContent(password), "password" }
-                };
+                    client.Timeout = TimeSpan.FromSeconds(10);
 
-                var response = await client.PostAsync(_url, content);
-                var json = await response.Content.ReadAsStringAsync();
-                var obj = JObject.Parse(json);
+                    var content = new MultipartFormDataContent
+            {
+                { new StringContent(username), "username" },
+                { new StringContent(password), "password" }
+            };
 
-                // Lỗi → trả về detail
-                if (!response.IsSuccessStatusCode)
-                {
-                    string detail = obj["detail"]?.ToString();
-                    return (false, detail);
+                    HttpResponseMessage response;
+
+                    try
+                    {
+                        response = await client.PostAsync(_url, content);
+                    }
+                    catch
+                    {
+                        return (false, "Không thể kết nối API");
+                    }
+
+                    string json = await response.Content.ReadAsStringAsync();
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            var obj = JObject.Parse(json);
+                            string detail = obj["detail"]?.ToString() ?? "Lỗi đăng nhập";
+                            return (false, detail);
+                        }
+                        catch
+                        {
+                            return (false, "Lỗi phản hồi từ server");
+                        }
+                    }
+                    try
+                    {
+                        var obj = JObject.Parse(json);
+                        string tokenType = obj["token_type"]?.ToString();
+                        string accessToken = obj["access_token"]?.ToString();
+
+                        if (tokenType == null || accessToken == null)
+                            return (false, "Dữ liệu không hợp lệ");
+
+                        return (true, $"{tokenType}\n\n{accessToken}");
+                    }
+                    catch
+                    {
+                        return (false, "Lỗi đọc dữ liệu");
+                    }
                 }
-
-                // Thành công → ghép token type + token
-                string tokenType = obj["token_type"]?.ToString();
-                string accessToken = obj["access_token"]?.ToString();
-
-                return (true, $"{tokenType}\n\n{accessToken}\n");
+            }
+            catch
+            {
+                return (false, "Lỗi không xác định");
             }
         }
+
     }
 }
