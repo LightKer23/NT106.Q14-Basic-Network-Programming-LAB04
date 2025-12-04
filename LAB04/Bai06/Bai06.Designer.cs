@@ -64,7 +64,7 @@
             groupBox1.Size = new Size(441, 78);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Lấy thông tin";
+            groupBox1.Text = "Token";
             // 
             // btnLay
             // 
@@ -74,7 +74,7 @@
             btnLay.TabIndex = 3;
             btnLay.Text = "LẤY";
             btnLay.UseVisualStyleBackColor = true;
-            btnLay.Click += this.btnLay_Click;
+            btnLay.Click += btnLay_Click;
             // 
             // label2
             // 
@@ -110,7 +110,7 @@
             Controls.Add(label1);
             Controls.Add(txtURL);
             Name = "Bai06";
-            Text = "Form1";
+            Text = "Bài 6";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
