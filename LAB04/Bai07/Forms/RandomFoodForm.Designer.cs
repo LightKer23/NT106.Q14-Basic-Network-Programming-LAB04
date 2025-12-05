@@ -33,13 +33,9 @@
             // 
             // foodItemControl1
             // 
-            foodItemControl1.Address = "";
-            foodItemControl1.Contributor = "";
             foodItemControl1.Dock = DockStyle.Fill;
-            foodItemControl1.FoodName = "Tên món ăn";
             foodItemControl1.Location = new Point(0, 0);
             foodItemControl1.Name = "foodItemControl1";
-            foodItemControl1.Price = "";
             foodItemControl1.Size = new Size(800, 200);
             foodItemControl1.TabIndex = 1;
             // 

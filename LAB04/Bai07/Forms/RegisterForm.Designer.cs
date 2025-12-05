@@ -141,7 +141,7 @@
             btnCancel.Location = new Point(280, 337);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(120, 35);
-            btnCancel.TabIndex = 23;
+            btnCancel.TabIndex = 12;
             btnCancel.Text = "Hủy bỏ";
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
@@ -152,7 +152,7 @@
             btnRegister.Location = new Point(155, 337);
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(120, 35);
-            btnRegister.TabIndex = 22;
+            btnRegister.TabIndex = 11;
             btnRegister.Text = "Ok";
             btnRegister.UseVisualStyleBackColor = true;
             btnRegister.Click += btnRegister_Click;
@@ -163,7 +163,7 @@
             btnLogin.Location = new Point(405, 337);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(120, 35);
-            btnLogin.TabIndex = 24;
+            btnLogin.TabIndex = 13;
             btnLogin.Text = "Đăng nhập...";
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
@@ -175,7 +175,7 @@
             comboBox1.Location = new Point(155, 262);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(257, 28);
-            comboBox1.TabIndex = 21;
+            comboBox1.TabIndex = 9;
             // 
             // rdBtnFemale
             // 
@@ -183,7 +183,7 @@
             rdBtnFemale.Location = new Point(269, 227);
             rdBtnFemale.Name = "rdBtnFemale";
             rdBtnFemale.Size = new Size(50, 24);
-            rdBtnFemale.TabIndex = 20;
+            rdBtnFemale.TabIndex = 8;
             rdBtnFemale.TabStop = true;
             rdBtnFemale.Text = "Nữ";
             rdBtnFemale.UseVisualStyleBackColor = true;
@@ -194,7 +194,7 @@
             rdBtnMale.Location = new Point(155, 227);
             rdBtnMale.Name = "rdBtnMale";
             rdBtnMale.Size = new Size(62, 24);
-            rdBtnMale.TabIndex = 19;
+            rdBtnMale.TabIndex = 7;
             rdBtnMale.TabStop = true;
             rdBtnMale.Text = "Nam";
             rdBtnMale.UseVisualStyleBackColor = true;
@@ -204,14 +204,14 @@
             dateTimePicker1.Location = new Point(155, 192);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(257, 27);
-            dateTimePicker1.TabIndex = 18;
+            dateTimePicker1.TabIndex = 6;
             // 
             // txtPsswrd
             // 
             txtPsswrd.Location = new Point(155, 297);
             txtPsswrd.Name = "txtPsswrd";
             txtPsswrd.Size = new Size(257, 27);
-            txtPsswrd.TabIndex = 17;
+            txtPsswrd.TabIndex = 10;
             txtPsswrd.UseSystemPasswordChar = true;
             // 
             // txtPhone
@@ -219,28 +219,28 @@
             txtPhone.Location = new Point(155, 157);
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(257, 27);
-            txtPhone.TabIndex = 16;
+            txtPhone.TabIndex = 5;
             // 
             // txtEmail
             // 
             txtEmail.Location = new Point(155, 122);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(257, 27);
-            txtEmail.TabIndex = 15;
+            txtEmail.TabIndex = 4;
             // 
             // txtLastName
             // 
             txtLastName.Location = new Point(155, 87);
             txtLastName.Name = "txtLastName";
             txtLastName.Size = new Size(257, 27);
-            txtLastName.TabIndex = 14;
+            txtLastName.TabIndex = 3;
             // 
             // txtFirstName
             // 
             txtFirstName.Location = new Point(155, 52);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(257, 27);
-            txtFirstName.TabIndex = 13;
+            txtFirstName.TabIndex = 2;
             // 
             // lblPsswrd
             // 
@@ -337,7 +337,7 @@
             txtUsername.Location = new Point(155, 17);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(257, 27);
-            txtUsername.TabIndex = 3;
+            txtUsername.TabIndex = 1;
             // 
             // RegisterForm
             // 

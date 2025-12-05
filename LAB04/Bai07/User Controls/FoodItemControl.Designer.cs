@@ -37,10 +37,8 @@
             lbl02 = new Label();
             lbl01 = new Label();
             lblNameFood = new Label();
-            fileSystemWatcher1 = new FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)pbImage).BeginInit();
             pnlText.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
             SuspendLayout();
             // 
             // pbImage
@@ -68,28 +66,32 @@
             // 
             // lblAddress
             // 
+            lblAddress.AutoSize = true;
             lblAddress.Location = new Point(124, 80);
             lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(43, 25);
+            lblAddress.Size = new Size(0, 20);
             lblAddress.TabIndex = 6;
             // 
             // lblContributor
             // 
+            lblContributor.AutoSize = true;
+            lblContributor.ForeColor = Color.Green;
             lblContributor.Location = new Point(124, 115);
             lblContributor.Name = "lblContributor";
-            lblContributor.Size = new Size(43, 25);
+            lblContributor.Size = new Size(0, 20);
             lblContributor.TabIndex = 5;
             // 
             // lblPrice
             // 
+            lblPrice.AutoSize = true;
             lblPrice.Location = new Point(124, 45);
             lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(43, 25);
+            lblPrice.Size = new Size(0, 20);
             lblPrice.TabIndex = 4;
             // 
             // lbl03
             // 
-            lbl03.Location = new Point(8, 115);
+            lbl03.Location = new Point(8, 126);
             lbl03.Name = "lbl03";
             lbl03.Size = new Size(81, 25);
             lbl03.TabIndex = 3;
@@ -97,7 +99,7 @@
             // 
             // lbl02
             // 
-            lbl02.Location = new Point(8, 80);
+            lbl02.Location = new Point(8, 91);
             lbl02.Name = "lbl02";
             lbl02.Size = new Size(63, 25);
             lbl02.TabIndex = 2;
@@ -105,7 +107,7 @@
             // 
             // lbl01
             // 
-            lbl01.Location = new Point(8, 45);
+            lbl01.Location = new Point(8, 56);
             lbl01.Name = "lbl01";
             lbl01.Size = new Size(43, 25);
             lbl01.TabIndex = 1;
@@ -113,17 +115,14 @@
             // 
             // lblNameFood
             // 
+            lblNameFood.AutoSize = true;
             lblNameFood.Font = new Font("Tahoma", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblNameFood.ForeColor = Color.FromArgb(255, 128, 0);
             lblNameFood.Location = new Point(8, 10);
             lblNameFood.Name = "lblNameFood";
-            lblNameFood.Size = new Size(159, 25);
+            lblNameFood.Size = new Size(149, 28);
             lblNameFood.TabIndex = 0;
             lblNameFood.Text = "Tên món ăn";
-            // 
-            // fileSystemWatcher1
-            // 
-            fileSystemWatcher1.EnableRaisingEvents = true;
-            fileSystemWatcher1.SynchronizingObject = this;
             // 
             // FoodItemControl
             // 
@@ -135,7 +134,7 @@
             Size = new Size(600, 155);
             ((System.ComponentModel.ISupportInitialize)pbImage).EndInit();
             pnlText.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
+            pnlText.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -150,6 +149,5 @@
         private Label lblAddress;
         private Label lblContributor;
         private Label lblPrice;
-        private FileSystemWatcher fileSystemWatcher1;
     }
 }

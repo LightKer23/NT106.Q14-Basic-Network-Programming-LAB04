@@ -1,9 +1,9 @@
 ﻿using Bai07.Models;
+using Bai07.Utils;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace Bai07.Services
 {
@@ -74,14 +74,24 @@ namespace Bai07.Services
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"=== POST {url} ===");
+
                 var json = JsonSerializer.Serialize(payload);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var resp = await _httpClient.PostAsync(url, content);
+                var request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = content
+                };
+
+                if (!url.Contains("/auth/token") && !url.Contains("/auth/refresh") && CurrentUser.IsLoggedIn && !string.IsNullOrEmpty(CurrentUser.User?.token))
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", CurrentUser.User.token);
+
+                var resp = await _httpClient.SendAsync(request);
                 var body = await resp.Content.ReadAsStringAsync();
 
                 if (!resp.IsSuccessStatusCode)
-                    return ApiResult<TRes>.Fail(body);
+                    return ApiResult<TRes>.Fail($"Lỗi {resp.StatusCode}: {body}");
 
                 try
                 {
@@ -90,7 +100,7 @@ namespace Bai07.Services
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show(body, "JSON trả về khi thêm món");
+                    MessageBox.Show(body, "JSON Response");
                     return ApiResult<TRes>.Fail("Lỗi parse JSON: " + ex.Message);
                 }
             }

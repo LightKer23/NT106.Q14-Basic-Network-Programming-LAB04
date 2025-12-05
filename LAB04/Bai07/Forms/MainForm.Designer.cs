@@ -51,6 +51,7 @@
             lblPage = new Label();
             statusStrip1 = new StatusStrip();
             tsslLabel = new ToolStripStatusLabel();
+            tsslName = new ToolStripStatusLabel();
             tsslLogOut = new ToolStripStatusLabel();
             toolStripProgressBar1 = new ToolStripProgressBar();
             tlpMain.SuspendLayout();
@@ -273,6 +274,7 @@
             // cboPageSize
             // 
             cboPageSize.FormattingEnabled = true;
+            cboPageSize.Items.AddRange(new object[] { "5", "10", "20" });
             cboPageSize.Location = new Point(552, 2);
             cboPageSize.Name = "cboPageSize";
             cboPageSize.Size = new Size(47, 28);
@@ -311,7 +313,7 @@
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { tsslLabel, tsslLogOut, toolStripProgressBar1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { tsslLabel, tsslName, tsslLogOut, toolStripProgressBar1 });
             statusStrip1.Location = new Point(0, 621);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(622, 26);
@@ -321,7 +323,14 @@
             // tsslLabel
             // 
             tsslLabel.Name = "tsslLabel";
-            tsslLabel.Size = new Size(0, 20);
+            tsslLabel.Size = new Size(78, 20);
+            tsslLabel.Text = "Welcome,";
+            // 
+            // tsslName
+            // 
+            tsslName.ForeColor = Color.SeaGreen;
+            tsslName.Name = "tsslName";
+            tsslName.Size = new Size(44, 20);
             // 
             // tsslLogOut
             // 
@@ -392,5 +401,6 @@
         private ToolStripStatusLabel tsslLabel;
         private ToolStripStatusLabel tsslLogOut;
         private ToolStripProgressBar toolStripProgressBar1;
+        private ToolStripStatusLabel tsslName;
     }
 }

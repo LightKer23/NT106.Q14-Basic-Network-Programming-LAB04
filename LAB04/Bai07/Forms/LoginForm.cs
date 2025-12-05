@@ -45,6 +45,11 @@ namespace Bai07
                 return;
             }
 
+            btnLogin.Enabled = false;
+            btnCancel.Enabled = false;
+            btnRegister.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+
             var login = await Program.AuthService.LoginAsync(username, password);
 
             if (!login.Success)
@@ -53,6 +58,11 @@ namespace Bai07
                     "Đăng nhập thất bại",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+
+                btnLogin.Enabled = true;
+                btnCancel.Enabled = true;
+                btnRegister.Enabled = true;
+                Cursor = Cursors.Default;
                 return;
             }
 

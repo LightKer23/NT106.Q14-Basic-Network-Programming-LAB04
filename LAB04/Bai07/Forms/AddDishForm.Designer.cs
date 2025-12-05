@@ -199,6 +199,7 @@
             Controls.Add(groupBox1);
             Name = "AddDishForm";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Thêm món ăn";
             Load += AddDishForm_Load;
             groupBox1.ResumeLayout(false);

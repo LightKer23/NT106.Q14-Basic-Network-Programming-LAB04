@@ -15,20 +15,61 @@ namespace Bai07.Services
             _apiClient = apiClient;
         }
 
-        public Task<ApiResult<PagedResult<FoodItem>>> GetAllFoodsAsync(int page, int size)
+        private static PagedResult<FoodItem> MapToPagedResult(DishListResponse<FoodItem> src)
         {
-            var payload = new { 
-                page, 
-                size 
+            var pg = src.pagination;
+            var totalPages = (int)Math.Ceiling(pg.total / (double)pg.page_size);
+
+            return new PagedResult<FoodItem>
+            {
+                Items = src.data,
+                Page = pg.current,
+                PageSize = pg.page_size,
+                TotalCount = pg.total,
+                TotalPages = totalPages
             };
-            return _apiClient.PostJsonAsync<object, PagedResult<FoodItem>>("/api/v1/monan/all", payload);
         }
 
-        public Task<ApiResult<PagedResult<FoodItem>>> GetMyFoodsAsync(int page, int size) 
+        public async Task<ApiResult<PagedResult<FoodItem>>> GetAllFoodsAsync(int page, int size)
         {
-            var payload = new { page, size };
+            var payload = new { current = page, pageSize = size };
 
-            return _apiClient.PostJsonAsync<object, PagedResult<FoodItem>>("/api/v1/monan/my-dishes", payload);
+            var apiRes = await _apiClient
+                .PostJsonAsync<object, DishListResponse<FoodItem>>("/api/v1/monan/all", payload);
+
+            if (!apiRes.Success || apiRes.Data == null)
+                return ApiResult<PagedResult<FoodItem>>
+                    .Fail(apiRes.ErrorMessage ?? "Không tải được danh sách cộng đồng.");
+
+            var d = apiRes.Data;
+
+            int totalPages = (int)Math.Ceiling((double)d.pagination.total / d.pagination.page_size);
+
+            var paged = new PagedResult<FoodItem>
+            {
+                Items = d.data,
+                Page = d.pagination.current,
+                PageSize = d.pagination.page_size,
+                TotalCount = d.pagination.total,
+                TotalPages = totalPages
+            };
+
+            return ApiResult<PagedResult<FoodItem>>.Ok(paged);
+        }
+
+        public async Task<ApiResult<PagedResult<FoodItem>>> GetMyFoodsAsync(int page, int size)
+        {
+            var payload = new { current = page, pageSize = size };
+
+            var apiRes = await _apiClient
+                .PostJsonAsync<object, DishListResponse<FoodItem>>("/api/v1/monan/my-dishes", payload);
+
+            if (!apiRes.Success || apiRes.Data == null)
+                return ApiResult<PagedResult<FoodItem>>
+                    .Fail(apiRes.ErrorMessage ?? "Không tải được danh sách cá nhân.");
+
+            var paged = MapToPagedResult(apiRes.Data);
+            return ApiResult<PagedResult<FoodItem>>.Ok(paged);
         }
 
         public Task<ApiResult<FoodItem>> GetFoodByIdAsync(int id)

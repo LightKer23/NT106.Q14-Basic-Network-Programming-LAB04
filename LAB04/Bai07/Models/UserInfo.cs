@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Bai07.Models
@@ -17,5 +18,8 @@ namespace Bai07.Models
         public DateTime? birthday { get; set; }  
         public string? language { get; set; } = string.Empty;
         public string? phone { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public string? token { get; set; } = string.Empty;
     }
 }

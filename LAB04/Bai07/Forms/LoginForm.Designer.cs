@@ -114,7 +114,7 @@
             txtUsername.Location = new Point(155, 17);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(257, 27);
-            txtUsername.TabIndex = 2;
+            txtUsername.TabIndex = 1;
             // 
             // panel2
             // 
@@ -138,7 +138,7 @@
             txtPsswrd.Location = new Point(155, 52);
             txtPsswrd.Name = "txtPsswrd";
             txtPsswrd.Size = new Size(257, 27);
-            txtPsswrd.TabIndex = 6;
+            txtPsswrd.TabIndex = 2;
             txtPsswrd.UseSystemPasswordChar = true;
             // 
             // btnCancel

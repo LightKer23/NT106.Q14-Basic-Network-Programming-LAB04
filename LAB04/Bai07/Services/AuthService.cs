@@ -1,4 +1,5 @@
 ﻿using Bai07.Models;
+using Bai07.Utils;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
@@ -15,23 +16,40 @@ namespace Bai07.Services
         {
             _apiClient = apiClient;
         }
-        public async Task<ApiResult<AuthTokenResponse>> LoginAsync(string username, string password)
+        public async Task<ApiResult<UserInfo>> LoginAsync(string username, string password)
         {
             var form = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("username", username),
                 new KeyValuePair<string, string>("password", password),
-                new KeyValuePair<string, string>("grant_type", "password")
             });
 
-            var response = await _apiClient.PostFromAsync<AuthTokenResponse>("/auth/token", form);
+            var loginResult = await _apiClient.PostFromAsync<AuthTokenResponse>("/auth/token", form);
 
-            if (response.Success && response.Data != null)
+            if (!loginResult.Success || loginResult.Data == null || string.IsNullOrEmpty(loginResult.Data.access_token))
+                return ApiResult<UserInfo>.Fail(loginResult.ErrorMessage ?? "Đăng nhập thất bại");
+
+            _apiClient.SetToken(loginResult.Data.token_type, loginResult.Data.access_token);
+
+            var meResult = await _apiClient.GetAsync<UserInfo>("/api/v1/user/me");
+            UserInfo userInfo;
+
+            if (meResult.Success && meResult.Data != null)
             {
-                _apiClient.SetToken(response.Data.token_type, response.Data.access_token);
+                userInfo = meResult.Data;
+                userInfo.token = loginResult.Data.access_token;
+            }
+            else
+            {
+                userInfo = new UserInfo
+                {
+                    username = username,
+                    token = loginResult.Data.access_token
+                };
             }
 
-            return response;
+            CurrentUser.SetUser(userInfo);
+            return ApiResult<UserInfo>.Ok(userInfo);
         }
 
         public Task<ApiResult<UserInfo>> GetMeAsync()
