@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-// BẮT BUỘC KHAI BÁO 2 THƯ VIỆN NÀY
 using System.Net;
 using System.IO;
 
-namespace Bai02 // Đã sửa theo namespace của bạn
+namespace Bai02 
 {
     public partial class Bai2 : Form
     {
