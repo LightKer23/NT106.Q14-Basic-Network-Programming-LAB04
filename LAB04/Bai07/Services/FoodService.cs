@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bai07.Models;
+﻿using Bai07.Models;
 
 namespace Bai07.Services
 {
@@ -18,13 +13,13 @@ namespace Bai07.Services
         private static PagedResult<FoodItem> MapToPagedResult(DishListResponse<FoodItem> src)
         {
             var pg = src.pagination;
-            var totalPages = (int)Math.Ceiling(pg.total / (double)pg.page_size);
+            var totalPages = (int)Math.Ceiling(pg.total / (double)pg.pageSize);
 
             return new PagedResult<FoodItem>
             {
                 Items = src.data,
                 Page = pg.current,
-                PageSize = pg.page_size,
+                PageSize = pg.pageSize,
                 TotalCount = pg.total,
                 TotalPages = totalPages
             };
@@ -43,13 +38,13 @@ namespace Bai07.Services
 
             var d = apiRes.Data;
 
-            int totalPages = (int)Math.Ceiling((double)d.pagination.total / d.pagination.page_size);
+            int totalPages = (int)Math.Ceiling((double)d.pagination.total / d.pagination.pageSize);
 
             var paged = new PagedResult<FoodItem>
             {
                 Items = d.data,
                 Page = d.pagination.current,
-                PageSize = d.pagination.page_size,
+                PageSize = d.pagination.pageSize,
                 TotalCount = d.pagination.total,
                 TotalPages = totalPages
             };
@@ -111,29 +106,26 @@ namespace Bai07.Services
             return _apiClient.DeleteAsync($"/api/v1/monan/{id}");
         }
 
-        public async Task<ApiResult<List<FoodItem>>> GetAllFoodsNoPagingAsync()
+        public async Task<ApiResult<List<FoodItem>>> GetFoodsByTabNoPagingAsync(Task<ApiResult<PagedResult<FoodItem>>> tab)
         {
-            var allFoods = new List<FoodItem>();
-
-            var firstPage = await GetAllFoodsAsync(1, 50);
+            var foods = new List<FoodItem>();
+            var firstPage = await tab;
             if (!firstPage.Success || firstPage.Data == null)
                 return ApiResult<List<FoodItem>>.Fail(firstPage.ErrorMessage ?? "Không tải được dữ liệu.");
 
-            allFoods.AddRange(firstPage.Data.Items);
+            foods.AddRange(firstPage.Data.Items);
             int totalPages = firstPage.Data.TotalPages;
 
             for (int p = 2; p <= totalPages; p++)
             {
-                var pageResult = await GetAllFoodsAsync(p, 50);
+                var pageResult = await tab;
                 if (!pageResult.Success || pageResult.Data == null)
                     return ApiResult<List<FoodItem>>.Fail(pageResult.ErrorMessage ?? $"Không tải được trang {p}");
 
-                allFoods.AddRange(pageResult.Data.Items);
+                foods.AddRange(pageResult.Data.Items);
             }
 
-            return ApiResult<List<FoodItem>>.Ok(allFoods);
+            return ApiResult<List<FoodItem>>.Ok(foods);
         }
-
-
     }
 }

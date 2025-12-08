@@ -201,6 +201,9 @@
             // 
             // dateTimePicker1
             // 
+            dateTimePicker1.MaxDate = DateTime.Today;
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             dateTimePicker1.Location = new Point(155, 192);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(257, 27);

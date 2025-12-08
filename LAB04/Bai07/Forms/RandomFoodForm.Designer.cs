@@ -33,17 +33,17 @@
             // 
             // foodItemControl1
             // 
-            foodItemControl1.Dock = DockStyle.Fill;
-            foodItemControl1.Location = new Point(0, 0);
+            foodItemControl1.Location = new Point(1, -1);
             foodItemControl1.Name = "foodItemControl1";
-            foodItemControl1.Size = new Size(800, 200);
-            foodItemControl1.TabIndex = 1;
+            foodItemControl1.ShowDeleteButton = false;
+            foodItemControl1.Size = new Size(600, 155);
+            foodItemControl1.TabIndex = 0;
             // 
             // RandomFoodForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 200);
+            ClientSize = new Size(602, 158);
             Controls.Add(foodItemControl1);
             Name = "RandomFoodForm";
             ShowIcon = false;

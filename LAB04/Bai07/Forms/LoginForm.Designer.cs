@@ -131,7 +131,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(530, 142);
             panel2.TabIndex = 5;
-            panel2.Paint += panel2_Paint;
             // 
             // txtPsswrd
             // 
@@ -185,7 +184,6 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Đăng nhập";
-            Load += LoginForm_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);

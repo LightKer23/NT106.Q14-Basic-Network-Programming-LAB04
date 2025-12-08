@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Bai07
+﻿namespace Bai07
 {
     public partial class AddDishForm : Form
     {
@@ -63,10 +53,20 @@ namespace Bai07
             }
 
             if (string.IsNullOrWhiteSpace(address))
-                address = null;
+            {
+                MessageBox.Show("Vui lòng nhập địa chỉ món ăn.", "Thiếu thông tin",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtAddress.Focus();
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(description))
-                description = null;
+            {
+                MessageBox.Show("Vui lòng nhập mô tả món ăn.", "Thiếu thông tin",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDescription.Focus();
+                return;
+            }
 
             btnAdd.Enabled = false;
             btnCancel.Enabled = false;
@@ -74,7 +74,7 @@ namespace Bai07
 
             try
             {
-                var result = await Program.FoodService.AddFoodAsync(name, price, description, _imagePathOrUrl, address);
+                var result = await Program.foodSer.AddFoodAsync(name, price, description, _imagePathOrUrl, address);
 
                 if (!result.Success || result.Data == null)
                 {

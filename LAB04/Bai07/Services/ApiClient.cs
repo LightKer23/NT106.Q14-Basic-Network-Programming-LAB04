@@ -3,7 +3,6 @@ using Bai07.Utils;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Bai07.Services
 {
@@ -30,6 +29,8 @@ namespace Bai07.Services
         {
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
+
+
         #region Helpers
 
         public async Task<ApiResult<T>> PostFromAsync<T>(string url, FormUrlEncodedContent content)
@@ -74,7 +75,7 @@ namespace Bai07.Services
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine($"=== POST {url} ===");
+                System.Diagnostics.Debug.WriteLine($"POST {url}");
 
                 var json = JsonSerializer.Serialize(payload);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");

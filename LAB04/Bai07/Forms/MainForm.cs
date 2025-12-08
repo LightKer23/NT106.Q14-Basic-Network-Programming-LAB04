@@ -1,16 +1,6 @@
 ﻿using Bai07.Forms;
 using Bai07.Models;
-using Bai07.Services;
 using Bai07.Utils;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Bai07
 {
@@ -39,7 +29,6 @@ namespace Bai07
             pnlAllList.Dock = DockStyle.Fill;
             pnlMyList.Dock = DockStyle.Fill;
 
-            // THÊM DÒNG NÀY: Đảm bảo pnlAllList hiển thị ban đầu
             pnlAllList.BringToFront();
             pnlMyList.Visible = false;
 
@@ -63,7 +52,7 @@ namespace Bai07
         {
             toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
 
-            var result = await Program.FoodService.GetAllFoodsAsync(_pageAll, _pageSize);
+            var result = await Program.foodSer.GetAllFoodsAsync(_pageAll, _pageSize);
 
             toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
 
@@ -89,7 +78,7 @@ namespace Bai07
 
             toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
 
-            var result = await Program.FoodService.GetMyFoodsAsync(_pageMy, _pageSize);
+            var result = await Program.foodSer.GetMyFoodsAsync(_pageMy, _pageSize);
 
             toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
 
@@ -140,15 +129,13 @@ namespace Bai07
             {
                 var card = new FoodItemControl();
                 card.SetData(f);
-                //
                 card.ShowDeleteButton = true;
 
                 card.OnDeleteClick += Card_OnDeleteClick;
-                //
                 flpMyFoods.Controls.Add(card);
             }
         }
-        //
+
         private async void Card_OnDeleteClick(object sender, int foodId)
         {
             var confirm = MessageBox.Show(
@@ -160,7 +147,7 @@ namespace Bai07
             if (confirm == DialogResult.No)
                 return;
 
-            var result = await Program.FoodService.DeleteFoodAsync(foodId);
+            var result = await Program.foodSer.DeleteFoodAsync(foodId);
 
             if (!result.Success)
             {
@@ -179,7 +166,6 @@ namespace Bai07
 
             MessageBox.Show("Đã xóa thành công!");
         }
-        //
 
         private void UpdatePageCombo()
         {
@@ -285,25 +271,32 @@ namespace Bai07
             this.Close();
         }
 
-        private async void btnRandom_Click(object sender, EventArgs e)
+        private async void RandomByTab(Task<ApiResult<List<FoodItem>>> tab)
         {
-            var allFoods = await Program.FoodService.GetAllFoodsNoPagingAsync();
-
-            if (!allFoods.Success || allFoods.Data == null || allFoods.Data.Count == 0)
+            var foodsResult = await tab;
+            if (!foodsResult.Success || foodsResult.Data == null || foodsResult.Data.Count == 0)
             {
                 MessageBox.Show("Không có món nào để tìm!");
                 return;
             }
-
             var rnd = new Random();
-            int idx = rnd.Next(0, allFoods.Data.Count);
-            var chosen = allFoods.Data[idx];
-
+            int idx = rnd.Next(0, foodsResult.Data.Count);
+            var chosen = foodsResult.Data[idx];
             using (var frm = new RandomFoodForm(chosen))
             {
                 frm.StartPosition = FormStartPosition.CenterParent;
                 frm.ShowDialog(this);
             }
+        }
+
+        private void btnRandom_Click(object sender, EventArgs e)
+        {
+            var value = Program.foodSer;
+
+            if (tabMain.SelectedTab == tbAll)
+                RandomByTab(value.GetFoodsByTabNoPagingAsync(value.GetAllFoodsAsync(1, 50)));
+            else
+                RandomByTab(value.GetFoodsByTabNoPagingAsync(value.GetMyFoodsAsync(1, 50)));
         }
     }
 }

@@ -46,7 +46,7 @@
             // 
             pbImage.Location = new Point(0, 0);
             pbImage.Name = "pbImage";
-            pbImage.Size = new Size(120, 152);
+            pbImage.Size = new Size(120, 155);
             pbImage.TabIndex = 0;
             pbImage.TabStop = false;
             // 
@@ -68,21 +68,23 @@
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = SystemColors.ButtonHighlight;
             btnDelete.FlatStyle = FlatStyle.Popup;
+            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDelete.ForeColor = Color.Red;
-            btnDelete.Location = new Point(303, 103);
+            btnDelete.Location = new Point(411, 111);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(53, 29);
             btnDelete.TabIndex = 7;
             btnDelete.Text = "X";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Visible = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // lblAddress
             // 
             lblAddress.AutoSize = true;
-            lblAddress.Location = new Point(124, 80);
+            lblAddress.Location = new Point(124, 91);
             lblAddress.Name = "lblAddress";
             lblAddress.Size = new Size(0, 20);
             lblAddress.TabIndex = 6;
@@ -91,7 +93,7 @@
             // 
             lblContributor.AutoSize = true;
             lblContributor.ForeColor = Color.Green;
-            lblContributor.Location = new Point(124, 115);
+            lblContributor.Location = new Point(124, 126);
             lblContributor.Name = "lblContributor";
             lblContributor.Size = new Size(0, 20);
             lblContributor.TabIndex = 5;
@@ -99,43 +101,49 @@
             // lblPrice
             // 
             lblPrice.AutoSize = true;
-            lblPrice.Location = new Point(124, 45);
+            lblPrice.Location = new Point(124, 56);
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(0, 20);
             lblPrice.TabIndex = 4;
             // 
             // lbl03
             // 
+            lbl03.AutoSize = true;
+            lbl03.Font = new Font("Tahoma", 9F);
             lbl03.Location = new Point(8, 126);
             lbl03.Name = "lbl03";
-            lbl03.Size = new Size(81, 25);
+            lbl03.Size = new Size(76, 18);
             lbl03.TabIndex = 3;
             lbl03.Text = "Đóng góp:";
             // 
             // lbl02
             // 
+            lbl02.AutoSize = true;
+            lbl02.Font = new Font("Tahoma", 9F);
             lbl02.Location = new Point(8, 91);
             lbl02.Name = "lbl02";
-            lbl02.Size = new Size(63, 25);
+            lbl02.Size = new Size(55, 18);
             lbl02.TabIndex = 2;
             lbl02.Text = "Địa chỉ:";
             // 
             // lbl01
             // 
+            lbl01.AutoSize = true;
+            lbl01.Font = new Font("Tahoma", 9F);
             lbl01.Location = new Point(8, 56);
             lbl01.Name = "lbl01";
-            lbl01.Size = new Size(43, 25);
+            lbl01.Size = new Size(33, 18);
             lbl01.TabIndex = 1;
             lbl01.Text = "Giá:";
             // 
             // lblNameFood
             // 
             lblNameFood.AutoSize = true;
-            lblNameFood.Font = new Font("Tahoma", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblNameFood.Font = new Font("Tahoma", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblNameFood.ForeColor = Color.FromArgb(255, 128, 0);
             lblNameFood.Location = new Point(8, 10);
             lblNameFood.Name = "lblNameFood";
-            lblNameFood.Size = new Size(149, 28);
+            lblNameFood.Size = new Size(180, 34);
             lblNameFood.TabIndex = 0;
             lblNameFood.Text = "Tên món ăn";
             // 

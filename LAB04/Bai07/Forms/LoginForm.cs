@@ -1,4 +1,3 @@
-using Bai07.Models;
 using Bai07.Utils;
 
 namespace Bai07
@@ -10,20 +9,10 @@ namespace Bai07
             InitializeComponent();
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnRegister_Click(object sender, EventArgs e)
         {
             RegisterForm registerForm = new RegisterForm();
             registerForm.Show();
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -50,7 +39,7 @@ namespace Bai07
             btnRegister.Enabled = false;
             Cursor = Cursors.WaitCursor;
 
-            var login = await Program.AuthService.LoginAsync(username, password);
+            var login = await Program.authSer.LoginAsync(username, password);
 
             if (!login.Success)
             {
@@ -66,7 +55,7 @@ namespace Bai07
                 return;
             }
 
-            var me = await Program.AuthService.GetMeAsync();
+            var me = await Program.authSer.GetMeAsync();
 
             if (me.Success && me.Data != null)
             {
