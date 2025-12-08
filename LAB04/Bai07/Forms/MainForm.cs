@@ -39,6 +39,10 @@ namespace Bai07
             pnlAllList.Dock = DockStyle.Fill;
             pnlMyList.Dock = DockStyle.Fill;
 
+            // THÊM DÒNG NÀY: Đảm bảo pnlAllList hiển thị ban đầu
+            pnlAllList.BringToFront();
+            pnlMyList.Visible = false;
+
             if (CurrentUser.User != null)
             {
                 tsslLabel.Text = "Welcome,";
@@ -51,7 +55,7 @@ namespace Bai07
             }
 
             cboPageSize.SelectedIndex = 0;
-
+            tabMain.SelectedTab = tbAll;
             await LoadAllFoodsAsync();
         }
 
@@ -112,6 +116,8 @@ namespace Bai07
 
         private void RenderAllFoods(List<FoodItem> items)
         {
+            pnlAllList.Visible = true;
+            pnlMyList.Visible = false;
             pnlAllList.BringToFront();
             ClearAndDisposeControls(flpAllFoods);
 
@@ -125,6 +131,8 @@ namespace Bai07
 
         private void RenderMyFoods(List<FoodItem> items)
         {
+            pnlMyList.Visible = true;
+            pnlAllList.Visible = false;
             pnlMyList.BringToFront();
             ClearAndDisposeControls(flpMyFoods);
 
@@ -132,9 +140,46 @@ namespace Bai07
             {
                 var card = new FoodItemControl();
                 card.SetData(f);
+                //
+                card.ShowDeleteButton = true;
+
+                card.OnDeleteClick += Card_OnDeleteClick;
+                //
                 flpMyFoods.Controls.Add(card);
             }
         }
+        //
+        private async void Card_OnDeleteClick(object sender, int foodId)
+        {
+            var confirm = MessageBox.Show(
+                "Bạn có chắc muốn xóa món này?",
+                "Xác nhận xóa",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (confirm == DialogResult.No)
+                return;
+
+            var result = await Program.FoodService.DeleteFoodAsync(foodId);
+
+            if (!result.Success)
+            {
+                MessageBox.Show("Xóa thất bại: " + (result.ErrorMessage ?? "Unknown error"));
+                return;
+            }
+
+            var card = sender as FoodItemControl;
+            if (card != null)
+            {
+                flpMyFoods.Controls.Remove(card);
+                card.Dispose();
+            }
+
+            await ReloadCurrentTabAsync();
+
+            MessageBox.Show("Đã xóa thành công!");
+        }
+        //
 
         private void UpdatePageCombo()
         {

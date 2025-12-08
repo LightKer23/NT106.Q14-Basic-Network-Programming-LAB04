@@ -30,6 +30,7 @@
         {
             pbImage = new PictureBox();
             pnlText = new Panel();
+            btnDelete = new Button();
             lblAddress = new Label();
             lblContributor = new Label();
             lblPrice = new Label();
@@ -51,6 +52,7 @@
             // 
             // pnlText
             // 
+            pnlText.Controls.Add(btnDelete);
             pnlText.Controls.Add(lblAddress);
             pnlText.Controls.Add(lblContributor);
             pnlText.Controls.Add(lblPrice);
@@ -63,6 +65,19 @@
             pnlText.Name = "pnlText";
             pnlText.Size = new Size(479, 155);
             pnlText.TabIndex = 1;
+            // 
+            // btnDelete
+            // 
+            btnDelete.FlatStyle = FlatStyle.Popup;
+            btnDelete.ForeColor = Color.Red;
+            btnDelete.Location = new Point(303, 103);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(53, 29);
+            btnDelete.TabIndex = 7;
+            btnDelete.Text = "X";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Visible = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // lblAddress
             // 
@@ -149,5 +164,6 @@
         private Label lblAddress;
         private Label lblContributor;
         private Label lblPrice;
+        private Button btnDelete;
     }
 }
