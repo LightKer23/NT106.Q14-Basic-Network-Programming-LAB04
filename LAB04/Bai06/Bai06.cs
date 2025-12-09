@@ -41,7 +41,7 @@
 
                 rtbShow.AppendText($"ID: {user.id}\n");
                 rtbShow.AppendText($"Username: {user.username}\n");
-                rtbShow.AppendText($"Full Name: {user.full_name}\n");
+                rtbShow.AppendText($"Full Name: {user.first_name} {user.last_name}\n");
                 rtbShow.AppendText($"Email: {user.email}\n");
                 rtbShow.AppendText($"Disabled: {user.disabled}\n");
             }

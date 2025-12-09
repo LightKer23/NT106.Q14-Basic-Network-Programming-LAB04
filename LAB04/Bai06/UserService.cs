@@ -40,6 +40,8 @@ namespace Bai06
 
                     string json = await response.Content.ReadAsStringAsync();
 
+                    MessageBox.Show(json);
+
                     if (!response.IsSuccessStatusCode)
                         return (false, "API trả về lỗi", null);
 
