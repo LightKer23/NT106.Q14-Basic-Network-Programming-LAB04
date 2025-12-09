@@ -96,6 +96,7 @@
             // 
             rtbShow.Location = new Point(26, 140);
             rtbShow.Name = "rtbShow";
+            rtbShow.ReadOnly = true;
             rtbShow.Size = new Size(441, 161);
             rtbShow.TabIndex = 3;
             rtbShow.Text = "";
