@@ -32,11 +32,13 @@
             txtFilePath = new TextBox();
             btnDownload = new Button();
             rtbContent = new RichTextBox();
+            URL = new Label();
+            label1 = new Label();
             SuspendLayout();
             // 
             // txtURL
             // 
-            txtURL.Location = new Point(12, 47);
+            txtURL.Location = new Point(12, 27);
             txtURL.Name = "txtURL";
             txtURL.Size = new Size(627, 27);
             txtURL.TabIndex = 0;
@@ -50,9 +52,9 @@
             // 
             // btnDownload
             // 
-            btnDownload.Location = new Point(694, 47);
+            btnDownload.Location = new Point(675, 25);
             btnDownload.Name = "btnDownload";
-            btnDownload.Size = new Size(94, 29);
+            btnDownload.Size = new Size(113, 52);
             btnDownload.TabIndex = 3;
             btnDownload.Text = "Download";
             btnDownload.UseVisualStyleBackColor = true;
@@ -62,9 +64,28 @@
             // 
             rtbContent.Location = new Point(12, 113);
             rtbContent.Name = "rtbContent";
+            rtbContent.ReadOnly = true;
             rtbContent.Size = new Size(776, 325);
             rtbContent.TabIndex = 4;
             rtbContent.Text = "";
+            // 
+            // URL
+            // 
+            URL.AutoSize = true;
+            URL.Location = new Point(12, 4);
+            URL.Name = "URL";
+            URL.Size = new Size(35, 20);
+            URL.TabIndex = 5;
+            URL.Text = "URL";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 57);
+            label1.Name = "label1";
+            label1.Size = new Size(64, 20);
+            label1.TabIndex = 6;
+            label1.Text = "FIle Path";
             // 
             // Bai2
             // 
@@ -72,6 +93,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Silver;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
+            Controls.Add(URL);
             Controls.Add(rtbContent);
             Controls.Add(btnDownload);
             Controls.Add(txtFilePath);
@@ -88,5 +111,7 @@
         private TextBox txtFilePath;
         private Button btnDownload;
         private RichTextBox rtbContent;
+        private Label URL;
+        private Label label1;
     }
 }
