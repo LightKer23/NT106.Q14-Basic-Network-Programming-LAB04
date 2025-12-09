@@ -67,11 +67,6 @@ namespace Bai07.Services
             return ApiResult<PagedResult<FoodItem>>.Ok(paged);
         }
 
-        public Task<ApiResult<FoodItem>> GetFoodByIdAsync(int id)
-        {
-            return _apiClient.GetAsync<FoodItem>($"/api/v1/monan/{id}");
-        }
-
 
         public Task<ApiResult<FoodItem>> AddFoodAsync(string name, int price, string? description, string? imageUrl, string? address)
         {
@@ -85,20 +80,6 @@ namespace Bai07.Services
             };
 
             return _apiClient.PostJsonAsync<object, FoodItem>("/api/v1/monan/add", payload);
-        }
-
-        public Task<ApiResult<FoodItem>> UpdateFoodAsync(int id, string name, int price, string? description, string? image, string? address)
-        {
-            var payload = new
-            {
-                ten_mon_an = name,
-                gia = price,
-                mo_ta = description,
-                hinh_anh = image,
-                dia_chi = address
-            };
-
-            return _apiClient.PostJsonAsync<object, FoodItem>($"/api/v1/monan/{id}", payload);
         }
 
         public Task<ApiResult<bool>> DeleteFoodAsync(int id)

@@ -194,6 +194,7 @@
             tabMain.SelectedIndex = 0;
             tabMain.Size = new Size(250, 24);
             tabMain.TabIndex = 0;
+            tabMain.SelectedTab = tbAll;
             tabMain.SelectedIndexChanged += tabMain_SelectedIndexChanged;
             // 
             // tbAll
@@ -219,6 +220,7 @@
             // pnlAllList
             // 
             pnlAllList.AutoScroll = true;
+            pnlAllList.BringToFront();
             pnlAllList.Controls.Add(pnlMyList);
             pnlAllList.Controls.Add(flpAllFoods);
             pnlAllList.Dock = DockStyle.Fill;
@@ -236,6 +238,7 @@
             pnlMyList.Name = "pnlMyList";
             pnlMyList.Size = new Size(610, 398);
             pnlMyList.TabIndex = 1;
+            pnlMyList.Visible = false;
             // 
             // flpMyFoods
             // 
@@ -279,6 +282,7 @@
             cboPageSize.Name = "cboPageSize";
             cboPageSize.Size = new Size(47, 28);
             cboPageSize.TabIndex = 3;
+            cboPageSize.SelectedIndex = 0;
             cboPageSize.SelectedIndexChanged += cboPageSize_SelectedIndexChanged;
             // 
             // cboPage

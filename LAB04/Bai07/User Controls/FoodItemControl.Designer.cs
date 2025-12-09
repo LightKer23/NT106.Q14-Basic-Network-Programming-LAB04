@@ -49,6 +49,7 @@
             pbImage.Size = new Size(120, 155);
             pbImage.TabIndex = 0;
             pbImage.TabStop = false;
+            pbImage.SizeMode = PictureBoxSizeMode.StretchImage;
             // 
             // pnlText
             // 

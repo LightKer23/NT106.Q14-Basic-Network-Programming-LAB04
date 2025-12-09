@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Bai07.Models
+﻿namespace Bai07.Models
 {
     public class AuthTokenResponse
     {

@@ -26,12 +26,6 @@ namespace Bai07
                 tlpContent.Controls.Add(pnlMyList, 0, 1);
             }
 
-            pnlAllList.Dock = DockStyle.Fill;
-            pnlMyList.Dock = DockStyle.Fill;
-
-            pnlAllList.BringToFront();
-            pnlMyList.Visible = false;
-
             if (CurrentUser.User != null)
             {
                 tsslLabel.Text = "Welcome,";
@@ -43,8 +37,6 @@ namespace Bai07
                 tsslName.Text = "";
             }
 
-            cboPageSize.SelectedIndex = 0;
-            tabMain.SelectedTab = tbAll;
             await LoadAllFoodsAsync();
         }
 

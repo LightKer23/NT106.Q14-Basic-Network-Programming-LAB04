@@ -1,9 +1,4 @@
 ﻿using Bai07.Models;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Net.Http;
-using System.Windows.Forms;
 
 namespace Bai07
 {
@@ -11,19 +6,29 @@ namespace Bai07
     {
         private const string BaseUrl = "https://nt106.uitiot.vn";
         private static readonly HttpClient httpClient = new HttpClient();
+        public int FoodId { get; private set; }
+        public event EventHandler<int>? OnDeleteClick;
 
         public FoodItemControl()
         {
             InitializeComponent();
-            pbImage.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            OnDeleteClick?.Invoke(this, FoodId);
+        }
+
+        public bool ShowDeleteButton
+        {
+            get => btnDelete.Visible;
+            set => btnDelete.Visible = value;
         }
 
         public void SetData(FoodItem food)
         {
             if (food == null) return;
-            //
             FoodId = food.id;
-            //
             lblNameFood.Text = food.ten_mon_an ?? "Chưa có tên";
             lblPrice.Text = $"{food.gia:N0} VNĐ";
             lblAddress.Text = (food.dia_chi ?? "Chưa có địa chỉ");
@@ -87,27 +92,5 @@ namespace Bai07
                 pbImage.Image = null;
             }
         }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            DisposeCurrentImage();
-            base.OnHandleDestroyed(e);
-        }
-
-        //update nút xóa
-        public int FoodId { get; private set; }
-        public event EventHandler<int>? OnDeleteClick;
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            OnDeleteClick?.Invoke(this, FoodId);
-        }
-
-        public bool ShowDeleteButton
-        {
-            get => btnDelete.Visible;
-            set => btnDelete.Visible = value;
-        }
-        //
     }
 }
