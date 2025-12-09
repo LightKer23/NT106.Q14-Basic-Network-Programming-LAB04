@@ -39,7 +39,7 @@
             webView.DefaultBackgroundColor = Color.White;
             webView.Location = new Point(0, 0);
             webView.Name = "webView";
-            webView.Size = new Size(801, 448);
+            webView.Size = new Size(1263, 677);
             webView.TabIndex = 0;
             webView.ZoomFactor = 1D;
             // 
@@ -47,7 +47,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1262, 675);
             Controls.Add(webView);
             Name = "movieDetail";
             Text = "Movie Detail";
