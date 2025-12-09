@@ -90,9 +90,10 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(346, 30);
+            btnLogin.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLogin.Location = new Point(328, 30);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(94, 67);
+            btnLogin.Size = new Size(124, 67);
             btnLogin.TabIndex = 2;
             btnLogin.Text = "ĐĂNG NHẬP";
             btnLogin.UseVisualStyleBackColor = true;
