@@ -23,7 +23,6 @@ namespace Bai02
             string url = txtURL.Text.Trim();
             string filePath = txtFilePath.Text.Trim();
 
-
             if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(filePath))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ URL và đường dẫn lưu file!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -48,13 +47,41 @@ namespace Bai02
                 return;
             }
 
+            if (!filePath.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+            {
+                filePath += ".html";
+            }
+
+            string directory = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directory))
+            {
+                MessageBox.Show("Thư mục lưu file không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Close();
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Bạn không có quyền ghi vào thư mục này. Vui lòng chọn thư mục khác.", "Lỗi quyền truy cập", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kiểm tra quyền truy cập: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 Cursor = Cursors.WaitCursor;
                 btnDownload.Enabled = false;
 
                 WebClient myClient = new WebClient();
-
                 myClient.DownloadFile(url, filePath);
 
                 StreamReader reader = new StreamReader(filePath);
@@ -75,8 +102,5 @@ namespace Bai02
                 btnDownload.Enabled = true;
             }
         }
-       
-
-      
     }
 }
