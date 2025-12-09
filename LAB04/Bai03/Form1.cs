@@ -21,40 +21,43 @@ namespace Bai03
             {
                 await webView21.EnsureCoreWebView2Async(null);
 
-                string projectPath = Directory.GetParent(Application.StartupPath).Parent.Parent.FullName;
-                string logoPath = Path.Combine(projectPath, "uit_logo.png");
+                var logoImage = Properties.Resources.uit_logo;
 
-                if (File.Exists(logoPath))
+                if (logoImage != null)
                 {
-                    byte[] imageBytes = await File.ReadAllBytesAsync(logoPath);
-                    string base64 = Convert.ToBase64String(imageBytes);
+                    using (var ms = new MemoryStream())
+                    {
+                        logoImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        byte[] imageBytes = ms.ToArray();
+                        string base64 = Convert.ToBase64String(imageBytes);
 
-                    string htmlContent = $@"
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <style>
-                            body {{
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 90vh;
-                                margin: 0;
-                                background-color: #f0f0f0;
-                            }}
-                            img {{
-                                max-width: 80%;
-                                max-height: 80%;
-                            }}
-                        </style>
-                    </head>
-                    <body>
-                        <img src='data:image/png;base64,{base64}' alt='UIT Logo' />
-                    </body>
-                    </html>";
+                        string htmlContent = $@"
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body {{
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 90vh;
+                                    margin: 0;
+                                    background-color: #f0f0f0;
+                                }}
+                                img {{
+                                    max-width: 80%;
+                                    max-height: 80%;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <img src='data:image/png;base64,{base64}' alt='UIT Logo' />
+                        </body>
+                        </html>";
 
-                    webView21.CoreWebView2.NavigateToString(htmlContent);
-                    return;
+                        webView21.CoreWebView2.NavigateToString(htmlContent);
+                        return;
+                    }
                 }
 
                 
