@@ -12,6 +12,8 @@ namespace Bai07
         private int _pageMy = 1;
         private int _totalPagesMy = 1;
         private bool _isUpdatingPageCombo = false;
+        private List<FoodItem>? _cacheAllFoods = null;
+        private List<FoodItem>? _cacheMyFoods = null;
 
         public MainForm()
         {
@@ -54,10 +56,16 @@ namespace Bai07
                 return;
             }
 
-            _totalPagesAll = result.Data.TotalPages;
-            UpdatePageCombo();
+            var d = result.Data;
+            var pg = d.pagination;
 
-            RenderAllFoods(result.Data.Items);
+            if (pg != null)
+                _totalPagesAll = (int)Math.Ceiling(pg.total / (double)pg.pageSize);
+            else
+                _totalPagesAll = 1;
+
+            UpdatePageCombo();
+            RenderAllFoods(d.data ?? new List<FoodItem>());
         }
 
         private async Task LoadMyFoodsAsync()
@@ -76,15 +84,24 @@ namespace Bai07
 
             if (!result.Success || result.Data == null)
             {
-                MessageBox.Show($"Lỗi: {result.ErrorMessage ?? "Không tải được danh sách cá nhân"}",
-                    "Lỗi API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"Lỗi: {result.ErrorMessage ?? "Không tải được danh sách cá nhân"}",
+                    "Lỗi API",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 return;
             }
 
-            _totalPagesMy = result.Data.TotalPages;
-            UpdatePageCombo();
+            var d = result.Data;
+            var pg = d.pagination;
 
-            RenderMyFoods(result.Data.Items ?? new List<FoodItem>());
+            if (pg != null)
+                _totalPagesMy = (int)Math.Ceiling(pg.total / (double)pg.pageSize);
+            else
+                _totalPagesMy = 1;
+
+            UpdatePageCombo();
+            RenderMyFoods(d.data ?? new List<FoodItem>());
         }
 
         private void ClearAndDisposeControls(FlowLayoutPanel panel)
@@ -122,7 +139,6 @@ namespace Bai07
                 var card = new FoodItemControl();
                 card.SetData(f);
                 card.ShowDeleteButton = true;
-
                 card.OnDeleteClick += Card_OnDeleteClick;
                 flpMyFoods.Controls.Add(card);
             }
@@ -146,6 +162,9 @@ namespace Bai07
                 MessageBox.Show("Xóa thất bại: " + (result.ErrorMessage ?? "Unknown error"));
                 return;
             }
+
+            _cacheAllFoods = null;
+            _cacheMyFoods = null;
 
             var card = sender as FoodItemControl;
             if (card != null)
@@ -250,6 +269,8 @@ namespace Bai07
                 if (frm.ShowDialog(this) == DialogResult.OK)
                 {
                     _pageAll = 1;
+                    _cacheAllFoods = null;
+                    _cacheMyFoods = null;
                     await ReloadCurrentTabAsync();
                 }
             }
@@ -263,17 +284,50 @@ namespace Bai07
             this.Close();
         }
 
-        private async void RandomByTab(Task<ApiResult<List<FoodItem>>> tab)
+        private async void btnRandom_Click(object sender, EventArgs e)
         {
-            var foodsResult = await tab;
-            if (!foodsResult.Success || foodsResult.Data == null || foodsResult.Data.Count == 0)
+            List<FoodItem>? list;
+
+            if (tabMain.SelectedTab == tbAll)
             {
-                MessageBox.Show("Không có món nào để tìm!");
+                if (_cacheAllFoods == null)
+                {
+                    var res = await Program.foodSer.GetAllFoodsNoPagingAsync();
+                    if (!res.Success || res.Data == null)
+                    {
+                        MessageBox.Show("Không có món nào!");
+                        return;
+                    }
+                    _cacheAllFoods = res.Data; 
+                }
+
+                list = _cacheAllFoods;
+            }
+            else
+            {
+                if (_cacheMyFoods == null)
+                {
+                    var res = await Program.foodSer.GetMyFoodsNoPagingAsync();
+                    if (!res.Success || res.Data == null)
+                    {
+                        MessageBox.Show("Không có món nào!");
+                        return;
+                    }
+                    _cacheMyFoods = res.Data;  
+                }
+
+                list = _cacheMyFoods;
+            }
+
+            if (list.Count == 0)
+            {
+                MessageBox.Show("Không có món nào!");
                 return;
             }
+
             var rnd = new Random();
-            int idx = rnd.Next(0, foodsResult.Data.Count);
-            var chosen = foodsResult.Data[idx];
+            var chosen = list[rnd.Next(list.Count)];
+
             using (var frm = new RandomFoodForm(chosen))
             {
                 frm.StartPosition = FormStartPosition.CenterParent;
@@ -281,14 +335,5 @@ namespace Bai07
             }
         }
 
-        private void btnRandom_Click(object sender, EventArgs e)
-        {
-            var value = Program.foodSer;
-
-            if (tabMain.SelectedTab == tbAll)
-                RandomByTab(value.GetFoodsByTabNoPagingAsync(value.GetAllFoodsAsync(1, 50)));
-            else
-                RandomByTab(value.GetFoodsByTabNoPagingAsync(value.GetMyFoodsAsync(1, 50)));
-        }
     }
 }

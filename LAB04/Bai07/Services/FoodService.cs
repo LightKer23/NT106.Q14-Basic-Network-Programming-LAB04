@@ -10,61 +10,26 @@ namespace Bai07.Services
             _apiClient = apiClient;
         }
 
-        private static PagedResult<FoodItem> MapToPagedResult(DishListResponse<FoodItem> src)
+        public Task<ApiResult<DishListResponse<FoodItem>>> GetAllFoodsAsync(int page, int size)
         {
-            var pg = src.pagination;
-            var totalPages = (int)Math.Ceiling(pg.total / (double)pg.pageSize);
-
-            return new PagedResult<FoodItem>
+            var payload = new
             {
-                Items = src.data,
-                Page = pg.current,
-                PageSize = pg.pageSize,
-                TotalCount = pg.total,
-                TotalPages = totalPages
-            };
-        }
-
-        public async Task<ApiResult<PagedResult<FoodItem>>> GetAllFoodsAsync(int page, int size)
-        {
-            var payload = new { current = page, pageSize = size };
-
-            var apiRes = await _apiClient
-                .PostJsonAsync<object, DishListResponse<FoodItem>>("/api/v1/monan/all", payload);
-
-            if (!apiRes.Success || apiRes.Data == null)
-                return ApiResult<PagedResult<FoodItem>>
-                    .Fail(apiRes.ErrorMessage ?? "Không tải được danh sách cộng đồng.");
-
-            var d = apiRes.Data;
-
-            int totalPages = (int)Math.Ceiling((double)d.pagination.total / d.pagination.pageSize);
-
-            var paged = new PagedResult<FoodItem>
-            {
-                Items = d.data,
-                Page = d.pagination.current,
-                PageSize = d.pagination.pageSize,
-                TotalCount = d.pagination.total,
-                TotalPages = totalPages
+                current = page,
+                pageSize = size
             };
 
-            return ApiResult<PagedResult<FoodItem>>.Ok(paged);
+            return _apiClient.PostJsonAsync<object, DishListResponse<FoodItem>>("/api/v1/monan/all", payload);
         }
 
-        public async Task<ApiResult<PagedResult<FoodItem>>> GetMyFoodsAsync(int page, int size)
+        public Task<ApiResult<DishListResponse<FoodItem>>> GetMyFoodsAsync(int page, int size)
         {
-            var payload = new { current = page, pageSize = size };
+            var payload = new
+            {
+                current = page,
+                pageSize = size
+            };
 
-            var apiRes = await _apiClient
-                .PostJsonAsync<object, DishListResponse<FoodItem>>("/api/v1/monan/my-dishes", payload);
-
-            if (!apiRes.Success || apiRes.Data == null)
-                return ApiResult<PagedResult<FoodItem>>
-                    .Fail(apiRes.ErrorMessage ?? "Không tải được danh sách cá nhân.");
-
-            var paged = MapToPagedResult(apiRes.Data);
-            return ApiResult<PagedResult<FoodItem>>.Ok(paged);
+            return _apiClient.PostJsonAsync<object, DishListResponse<FoodItem>>("/api/v1/monan/my-dishes", payload);
         }
 
 
@@ -87,26 +52,60 @@ namespace Bai07.Services
             return _apiClient.DeleteAsync($"/api/v1/monan/{id}");
         }
 
-        public async Task<ApiResult<List<FoodItem>>> GetFoodsByTabNoPagingAsync(Task<ApiResult<PagedResult<FoodItem>>> tab)
+        public async Task<ApiResult<List<FoodItem>>> GetAllFoodsNoPagingAsync(int pageSize = 50)
         {
-            var foods = new List<FoodItem>();
-            var firstPage = await tab;
-            if (!firstPage.Success || firstPage.Data == null)
-                return ApiResult<List<FoodItem>>.Fail(firstPage.ErrorMessage ?? "Không tải được dữ liệu.");
+            var allFoods = new List<FoodItem>();
 
-            foods.AddRange(firstPage.Data.Items);
-            int totalPages = firstPage.Data.TotalPages;
+            var first = await GetAllFoodsAsync(1, pageSize);
+            if (!first.Success || first.Data == null)
+                return ApiResult<List<FoodItem>>.Fail(first.ErrorMessage ?? "Không tải được dữ liệu cộng đồng.");
+
+            allFoods.AddRange(first.Data.data);
+
+            var pg = first.Data.pagination;
+            if (pg == null)
+                return ApiResult<List<FoodItem>>.Ok(allFoods); 
+
+            int totalPages = (int)Math.Ceiling(pg.total / (double)pg.pageSize);
 
             for (int p = 2; p <= totalPages; p++)
             {
-                var pageResult = await tab;
-                if (!pageResult.Success || pageResult.Data == null)
-                    return ApiResult<List<FoodItem>>.Fail(pageResult.ErrorMessage ?? $"Không tải được trang {p}");
+                var res = await GetAllFoodsAsync(p, pageSize);
+                if (!res.Success || res.Data == null)
+                    return ApiResult<List<FoodItem>>.Fail(res.ErrorMessage ?? $"Không tải được trang {p}.");
 
-                foods.AddRange(pageResult.Data.Items);
+                allFoods.AddRange(res.Data.data);
             }
 
-            return ApiResult<List<FoodItem>>.Ok(foods);
+            return ApiResult<List<FoodItem>>.Ok(allFoods);
+        }
+
+        public async Task<ApiResult<List<FoodItem>>> GetMyFoodsNoPagingAsync(int pageSize = 50)
+        {
+            var allFoods = new List<FoodItem>();
+
+            var first = await GetMyFoodsAsync(1, pageSize);
+            if (!first.Success || first.Data == null)
+                return ApiResult<List<FoodItem>>.Fail(first.ErrorMessage ?? "Không tải được danh sách cá nhân.");
+
+            allFoods.AddRange(first.Data.data);
+
+            var pg = first.Data.pagination;
+            if (pg == null)
+                return ApiResult<List<FoodItem>>.Ok(allFoods);
+
+            int totalPages = (int)Math.Ceiling(pg.total / (double)pg.pageSize);
+
+            for (int p = 2; p <= totalPages; p++)
+            {
+                var res = await GetMyFoodsAsync(p, pageSize);
+                if (!res.Success || res.Data == null)
+                    return ApiResult<List<FoodItem>>.Fail(res.ErrorMessage ?? $"Không tải được trang {p}.");
+
+                allFoods.AddRange(res.Data.data);
+            }
+
+            return ApiResult<List<FoodItem>>.Ok(allFoods);
         }
     }
 }
